@@ -1,0 +1,52 @@
+{
+  "name": "test-competence",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build",
+  "scripts": {
+    "test": "jest",
+    "local": "ts-node-dev --respawn --transpile-only -r dotenv/config src dotenv_config_path=env/.env-local",
+    "prod": "tsc && node -r dotenv/config ./build dotenv_config_path=env/.env-prod",
+    "qa": "tsc && node -r dotenv/config ./build dotenv_config_path=env/.env-qa",
+    "dev": "tsc && node -r dotenv/config ./build dotenv_config_path=env/.env-dev",
+    "compile-schemas": "json2ts -i src/schemas -o src/types",
+    "lint": "eslint src --fix",
+    "pm2-local": "pm2 start ecosystem.config.js",
+    "pm2-stop": "pm2 delete myApp"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tsconfig/node12": "1.0.7",
+    "@types/convict": "5.2.1",
+    "@types/node": "14.10.0",
+    "@types/validator": "13.1.0",
+    "chai": "4.2.0",
+    "convict": "6.0.0",
+    "convict-format-with-validator": "6.0.0",
+    "dotenv": "8.2.0",
+    "fastify": "3.3.0",
+    "fastify-helmet": "5.0.1",
+    "fastify-plugin": "2.3.3",
+    "graphql": "15.3.0",
+    "pm2": "4.4.1",
+    "sequelize": "6.3.5",
+    "sinon": "9.0.3",
+    "sqlite3": "5.0.0",
+    "typescript": "4.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "26.0.13",
+    "@typescript-eslint/eslint-plugin": "4.1.0",
+    "@typescript-eslint/parser": "4.1.0",
+    "eslint": "7.8.1",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-security": "1.4.0",
+    "jest": "26.4.2",
+    "prettier": "2.1.1",
+    "ts-jest": "26.3.0",
+    "ts-node-dev": "1.0.0-pre.62"
+  }
+}
