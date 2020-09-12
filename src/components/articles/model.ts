@@ -1,6 +1,5 @@
 import { Status, statusName } from '../types'
 import { model, Schema, Document, Types, Model } from 'mongoose'
-import { IUser } from '../users/model'
 
 export interface IArticleBase {
     title: string
