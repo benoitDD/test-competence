@@ -1,5 +1,6 @@
 import { Status, statusName } from '../types'
-import { model, Schema, Document, Types } from 'mongoose'
+import { model, Schema, Document, Types, Model } from 'mongoose'
+import { IUser } from '../users/model'
 
 export interface IArticleBase {
     title: string
@@ -7,10 +8,12 @@ export interface IArticleBase {
     text: string
     tags: string[]
     status: Status
+    author: Schema.Types.ObjectId
 }
 
-interface IArticle extends IArticleBase, Document {
+export interface IArticle extends IArticleBase, Document {
     tags: Types.Array<string>
+    //author: IUser
 }
 
 const articleSchema = new Schema({
@@ -38,6 +41,13 @@ const articleSchema = new Schema({
         required: true,
         enum: statusName,
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 })
 
-export default model<IArticle>('Article', articleSchema)
+export type IArticleModel = Model<IArticle>
+
+export default model<IArticle, IArticleModel>('Article', articleSchema)
