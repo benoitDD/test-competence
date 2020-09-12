@@ -1,12 +1,16 @@
 import { Status, statusName } from '../types'
 import { model, Schema, Document, Types } from 'mongoose'
 
-interface IArticle extends Document {
+export interface IArticleBase {
     title: string
     image: string
     text: string
-    tags: Types.Array<string>
+    tags: string[]
     status: Status
+}
+
+interface IArticle extends IArticleBase, Document {
+    tags: Types.Array<string>
 }
 
 const articleSchema = new Schema({

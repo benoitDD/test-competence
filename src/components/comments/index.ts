@@ -1,19 +1,18 @@
 import { FastifyPluginAsync } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
+import commentService from './service'
 
 declare module 'fastify' {
     interface FastifyInstance {
         comments: {
-            createComment: () => void
+            service: typeof commentService
         }
     }
 }
 
 const plugin: FastifyPluginAsync = async function (app) {
     app.decorate('comments', {
-        createUser: () => {
-            console.log('comment created')
-        },
+        service: commentService,
     })
 }
 

@@ -16,4 +16,9 @@ app.listen(config.get('port'), async (err) => {
         app.log.error({ err })
         return process.exit(1)
     }
+
+    app.articles.service
+        .createArticle({ image: 'dfsgvfdsv', status: 'private', tags: ['fdg'], text: 'dsfgvdfg', title: 'fdsgdfg' })
+        .then(() => console.log('done'))
+        .catch((err) => console.log(err))
 })

@@ -1,13 +1,15 @@
 import { Role, rolesName } from '../types'
 import { model, Schema, Document } from 'mongoose'
 
-interface IUser extends Document {
+export interface IUserBase {
     email: string
     login: string
     password: string
     avatar: string
     role: Role
 }
+
+export interface IUser extends IUserBase, Document {}
 
 const userSchema = new Schema({
     email: {

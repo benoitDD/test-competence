@@ -1,19 +1,18 @@
 import { FastifyPluginAsync } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
+import userService from './service'
 
 declare module 'fastify' {
     interface FastifyInstance {
         users: {
-            createUser: () => void
+            service: typeof userService
         }
     }
 }
 
 const plugin: FastifyPluginAsync = async function (app) {
     app.decorate('users', {
-        createUser: () => {
-            console.log('user created')
-        },
+        service: userService,
     })
 }
 

@@ -1,13 +1,9 @@
-export enum Role {
-    admin,
-    user,
-}
-/** all roles */
-export const rolesName = Object.keys(Role).filter((role) => Number.isNaN(Number(role)))
+export type Role = 'admin' | 'user'
 
-export enum Status {
-    public,
-    private,
-}
+/** all roles */
+export const rolesName = ['admin', 'user']
+
+export type Status = 'public' | 'private'
+
 /** all status */
-export const statusName = Object.keys(Status).filter((s) => Number.isNaN(Number(s)))
+export const statusName = ['public', 'private']

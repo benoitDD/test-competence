@@ -1,8 +1,10 @@
 import { model, Schema, Document } from 'mongoose'
 
-interface IComment extends Document {
+export interface ICommentBase {
     text: string
 }
+
+interface IComment extends ICommentBase, Document {}
 
 const commentSchema = new Schema({
     text: {
