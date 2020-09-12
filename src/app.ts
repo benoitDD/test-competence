@@ -2,6 +2,7 @@ import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify'
 import routes from './routes'
 import plugins from './plugins'
 import helmet from 'fastify-helmet'
+import components from './components'
 
 function buildApp(opts: FastifyServerOptions = {}): FastifyInstance {
     const app = fastify(opts)
@@ -9,6 +10,7 @@ function buildApp(opts: FastifyServerOptions = {}): FastifyInstance {
     app.register(plugins)
     app.register(helmet)
     app.register(routes)
+    app.register(components)
 
     app.setErrorHandler((err, request, reply) => {
         if (err.statusCode && err.statusCode >= 400 && err.statusCode < 500) {

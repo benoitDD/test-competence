@@ -11,13 +11,13 @@ const schema = {
         env: 'NODE_ENV',
     },
     ip: {
-        doc: 'The IP address to bind.',
+        doc: 'The IP interface to listen.',
         format: 'ipaddress',
         default: '0.0.0.0',
         env: 'IP_ADDRESS',
     },
     port: {
-        doc: 'The port to bind.',
+        doc: 'The server port to listen.',
         format: 'port',
         default: 8080,
         env: 'PORT',
@@ -26,7 +26,7 @@ const schema = {
         uri: {
             doc: 'The database uri.',
             format: String,
-            default: 'sqlite::memory:',
+            default: 'mongodb://192.168.99.100/myApp',
             env: 'DATABASE_URI',
         },
     },

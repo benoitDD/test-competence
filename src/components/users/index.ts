@@ -10,13 +10,6 @@ declare module 'fastify' {
 }
 
 const plugin: FastifyPluginAsync = async function (app) {
-    User.init(userSchema, {
-        tableName: 'user',
-        sequelize: app.sequelize, // passing the `sequelize` instance is required
-    })
-    // Here we associate which actually populates out pre-declared `association` static and other methods.
-    User.hasMany(Article)
-
     app.decorate('user', {
         model: User,
     })
