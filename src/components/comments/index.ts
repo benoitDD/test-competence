@@ -1,14 +1,20 @@
 import { FastifyPluginAsync } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
-import { Comment, commentSchema } from './model'
+
+declare module 'fastify' {
+    interface FastifyInstance {
+        comments: {
+            createComment: () => void
+        }
+    }
+}
 
 const plugin: FastifyPluginAsync = async function (app) {
-    Comment.init(commentSchema, {
-        tableName: 'comment',
-        sequelize: app.sequelize, // passing the `sequelize` instance is required
+    app.decorate('comments', {
+        createUser: () => {
+            console.log('comment created')
+        },
     })
-
-    app.decorate('comment', {})
 }
 
 export default fastifyPlugin(plugin)
