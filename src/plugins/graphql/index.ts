@@ -22,6 +22,7 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
     app.register(GQL, {
         schema,
         resolvers,
+        graphiql: true,
     })
 }
 

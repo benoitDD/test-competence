@@ -1,14 +1,14 @@
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify'
 import routes from './routes'
 import plugins from './plugins'
-import helmet from 'fastify-helmet'
+//import helmet from 'fastify-helmet'
 import components from './components'
 
 function buildApp(opts: FastifyServerOptions = {}): FastifyInstance {
     const app = fastify(opts)
 
     app.register(plugins)
-    app.register(helmet)
+    //app.register(helmet)
     app.register(routes)
     app.register(components)
 
