@@ -13,14 +13,15 @@ function buildApp(opts: FastifyServerOptions = {}): FastifyInstance {
     app.register(components)
 
     app.setErrorHandler((err, request, reply) => {
+        const errorMessage = err.message
         if (err.statusCode && err.statusCode >= 400 && err.statusCode < 500) {
-            app.log.warn({ err })
-            reply.code(err.statusCode).send(err.message)
+            app.log.warn(errorMessage)
+            reply.code(err.statusCode).send(errorMessage)
         } else if (err.validation) {
             app.log.warn({ err })
-            reply.code(400).send(err.message)
+            reply.code(400).send(errorMessage)
         } else {
-            app.log.error({ err })
+            app.log.error(errorMessage)
             reply.code(500).send('internal error')
         }
     })
