@@ -1,26 +1,29 @@
 import { FastifyPluginAsync } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
-//import { schema } from './schema'
+import { schema } from './schema'
 //import { root } from './root'
 import GQL from 'fastify-gql'
+import { Types } from 'mongoose'
 
 const graphqlPlugins: FastifyPluginAsync = async function (app) {
-    const schema = `
-    type Query {
-        add(x: Int, y: Int): Int
-    }
-    `
-    const add: (nada: unknown, args: { x: number; y: number }) => Promise<number> = async (_, { x, y }) => x + y
     const resolvers = {
-        Query: {
-            add: add,
+        Query: {},
+        Mutation: {
+            createArticle: app.articles.graphql.createArticle,
         },
+        Article: app.articles.typeResolver,
     }
 
     app.register(GQL, {
         schema,
         resolvers,
         graphiql: true,
+        context: async (request, reply) => {
+            // Return an object that will be available in your GraphQL resolvers
+            return {
+                user: { id: new Types.ObjectId().toHexString() },
+            }
+        },
     })
 
     //add the tags in swagger for graphql.

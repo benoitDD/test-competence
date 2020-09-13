@@ -1,18 +1,13 @@
 import { Status, statusName } from '../types'
-import { model, Schema, Document, Types, Model } from 'mongoose'
+import { model, Schema, Document, Types } from 'mongoose'
 
-export interface IArticleBase {
+export interface IArticle extends Document {
     title: string
     image: string
     text: string
-    tags: string[]
     status: Status
-    author: Schema.Types.ObjectId
-}
-
-export interface IArticle extends IArticleBase, Document {
     tags: Types.Array<string>
-    //author: IUser
+    author: Schema.Types.ObjectId
 }
 
 const articleSchema = new Schema({
@@ -34,7 +29,10 @@ const articleSchema = new Schema({
         minlength: 1,
         maxlength: 500,
     },
-    tags: [String],
+    tags: {
+        type: [String],
+        required: true,
+    },
     status: {
         type: String,
         required: true,
@@ -47,6 +45,4 @@ const articleSchema = new Schema({
     },
 })
 
-export type IArticleModel = Model<IArticle>
-
-export default model<IArticle, IArticleModel>('Article', articleSchema)
+export default model<IArticle>('Article', articleSchema)

@@ -3,6 +3,7 @@ import routes from './routes'
 import plugins from './plugins'
 //import helmet from 'fastify-helmet'
 import components from './components'
+import graphql from './graphql'
 
 function buildApp(opts: FastifyServerOptions = {}): FastifyInstance {
     const app = fastify(opts)
@@ -11,6 +12,7 @@ function buildApp(opts: FastifyServerOptions = {}): FastifyInstance {
     //app.register(helmet)
     app.register(routes)
     app.register(components)
+    app.register(graphql)
 
     app.setErrorHandler((err, request, reply) => {
         const errorMessage = err.message
