@@ -17,7 +17,7 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
     app.register(GQL, {
         schema,
         resolvers,
-        graphiql: true,
+        graphiql: 'playground',
         context: async (request, reply) => {
             // Return an object that will be available in your GraphQL resolvers
             return {
