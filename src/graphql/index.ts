@@ -3,7 +3,7 @@ import fastifyPlugin from 'fastify-plugin'
 import { schema } from './schema'
 //import { root } from './root'
 import GQL from 'fastify-gql'
-import { Types } from 'mongoose'
+import jwt from 'jsonwebtoken'
 
 const graphqlPlugins: FastifyPluginAsync = async function (app) {
     const resolvers = {
@@ -20,11 +20,27 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
         schema,
         resolvers,
         graphiql: 'playground',
-        context: async (request, reply) => {
+        context: async (request) => {
+            const authorization = request.headers.authorization
+            if (!authorization) return
+
+            const [type, token] = authorization.split(' ')
+
+            if (type !== 'Bearer' || !token) return
+
             // Return an object that will be available in your GraphQL resolvers
+            return new Promise((resolve, reject) => {
+                jwt.verify(token, app.config.get('userAuthentication').secretKey, function (err, decoded) {
+                    if (err) return reject(err)
+
+                    resolve({ user: decoded })
+                })
+            })
+            /*
             return {
                 //user: { id: new Types.ObjectId().toHexString() },
             }
+            */
         },
     })
 
