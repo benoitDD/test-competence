@@ -19,7 +19,7 @@ class UserService {
         })
     }
     async signUp(args: SignUpArgs, user?: User): Promise<User> {
-        if (user) throw new SafeError('you are already connected, disconnect you then sign up you.')
+        if (user) throw new SafeError('you are already connected, disconnect you, then sign you up.')
 
         const userModel = await getUserModel()
         return userModel
