@@ -35,7 +35,7 @@ type Article {
   tags: [String!]!
   status: Status!
   author: User
-  comment: [Comment]
+  comments: [Comment]
 }
 enum Status {
   private

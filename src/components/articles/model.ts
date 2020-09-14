@@ -43,6 +43,13 @@ const articleSchema = new Schema({
         ref: 'User',
         required: true,
     },
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Comment',
+            required: true,
+        },
+    ],
 })
 
 export default model<IArticle>('Article', articleSchema)

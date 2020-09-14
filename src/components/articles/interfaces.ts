@@ -10,7 +10,7 @@ export interface Article {
     text: string
     tags: string[]
     status: Status
-    comment: Comment[]
+    comments: Comment[]
     author: User | Types.ObjectId
 }
 
