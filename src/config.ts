@@ -30,6 +30,22 @@ const schema = {
             env: 'DATABASE_URI',
         },
     },
+    userAuthentication: {
+        secretKey: {
+            doc: 'The secret key for create and read the authentication tokens of users.',
+            format: String,
+            default: 'YOUR_SECRET_TOKEN',
+            env: 'SECRET_KEY_FOR_TOKENS_AUTH',
+            arg: 'skta',
+        },
+        expireIn: {
+            doc: 'The secret key expire in x seconds.',
+            format: 'nat',
+            default: 60 * 60 * 5, //the token expire in 5 hours.
+            env: 'EXPIRE_FOR_TOKENS_AUTH',
+            arg: 'ekta',
+        },
+    },
 }
 
 export interface ConfigI {
@@ -38,6 +54,10 @@ export interface ConfigI {
     port: number
     database: {
         uri: string
+    }
+    userAuthentication: {
+        secretKey: string
+        expireIn: number
     }
 }
 

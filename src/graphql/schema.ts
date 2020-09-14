@@ -1,7 +1,7 @@
 export const schema = `
 type Mutation {
-  signIn(login: String!, password: String!): User
-  signUp(login: String!, password: String!, email: String!, avatar: String): User
+  signIn(login: String!, password: String!): UserAndToken
+  signUp(login: String!, password: String!, email: String!, avatar: String): UserAndToken
   updateUser(avatar: String): User
   signOut: Boolean
   createArticle(title: String!, image: String!, text: String!, tags: [String!]!, status: Status!): Article
@@ -19,6 +19,13 @@ type User {
   login: String!
   email: String!
   avatar: String!
+}
+type UserAndToken {
+  id: ID!
+  login: String!
+  email: String!
+  avatar: String!
+  token: String!
 }
 type Article {
   id: ID!

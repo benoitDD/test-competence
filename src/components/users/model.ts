@@ -60,6 +60,7 @@ const init: () => Promise<Model<IUser>> = async () => {
             next()
         })
     })
+
     return model<IUser>('User', userSchema)
 }
 

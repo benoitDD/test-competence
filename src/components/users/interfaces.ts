@@ -1,3 +1,4 @@
+import { tokenToString } from 'typescript'
 import { Role } from '../types'
 
 export interface User {
@@ -8,9 +9,18 @@ export interface User {
     role: Role
 }
 
+export interface UserAndToken extends User {
+    token: string
+}
+
 export interface SignUpArgs {
     login: string
     password: string
     email: string
     avatar: string
+}
+
+export interface SignInArgs {
+    login: string
+    password: string
 }

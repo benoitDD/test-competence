@@ -11,6 +11,7 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
         Mutation: {
             createArticle: app.articles.graphql.createArticle,
             signUp: app.users.graphql.signUp,
+            signIn: app.users.graphql.signIn,
         },
         Article: app.articles.typeResolver,
     }
