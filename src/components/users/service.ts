@@ -89,6 +89,11 @@ class UserService {
                 return userMongoose?.toObject({ virtuals: true })
             })
     }
+    async signOut(user?: User): Promise<boolean> {
+        if (!user) throw new SafeError('you must be connected to sign out')
+
+        return true
+    }
 }
 
 const userService = new UserService()

@@ -12,6 +12,9 @@ class UserGraphql {
     updateUser: Resolver<unknown, UpdateUserArgs, User> = (_, args, { user }) => {
         return userService.updateUser(args, user)
     }
+    signOut: Resolver<unknown, unknown, boolean> = (_, args, { user }) => {
+        return userService.signOut(user)
+    }
 }
 
 const userGraphql = new UserGraphql()

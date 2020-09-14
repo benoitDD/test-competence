@@ -5,8 +5,8 @@ type Mutation {
   updateUser(avatar: String): User
   signOut: Boolean
   createArticle(title: String!, image: String!, text: String!, tags: [String!]!, status: Status!): Article
-  updateArticle(articleId: ID!, title: String, image: String, text: String, tags: [String!], status: Status): Article
-  removeArticle(articleId: ID!): Boolean
+  updateArticle(id: ID!, title: String, image: String, text: String, tags: [String!], status: Status): Article
+  removeArticle(id: ID!): Boolean
   createComment(userId: ID!, text: String!): Comment
 }
 type Query {

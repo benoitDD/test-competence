@@ -21,3 +21,16 @@ export interface CreateArticleArgs {
     tags: string[]
     status: Status
 }
+
+export interface UpdateArticleArgs {
+    id: string
+    title?: string
+    image?: string
+    text?: string
+    tags?: string[]
+    status?: Status
+}
+
+export interface RemoveArticleArgs {
+    id: string
+}
