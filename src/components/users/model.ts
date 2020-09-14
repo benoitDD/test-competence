@@ -16,12 +16,14 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         minlength: 5,
         maxlength: 50,
     },
     login: {
         type: String,
         required: true,
+        unique: true,
         minlength: 4,
         maxlength: 20,
     },
