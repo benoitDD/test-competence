@@ -36,11 +36,6 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
                     resolve({ user: decoded })
                 })
             })
-            /*
-            return {
-                //user: { id: new Types.ObjectId().toHexString() },
-            }
-            */
         },
     })
 
