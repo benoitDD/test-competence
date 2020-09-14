@@ -1,5 +1,6 @@
 import { Role, rolesName } from '../types'
-import { model, Schema, Document } from 'mongoose'
+import { model, Schema, Document, Model } from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 export interface IUserBase {
     email: string
@@ -43,4 +44,21 @@ const userSchema = new Schema({
     },
 })
 
-export default model<IUser>('User', userSchema)
+const init: () => Promise<Model<IUser>> = async () => {
+    const salt = await bcrypt.genSalt(10)
+
+    //hash the password user before save in database.
+    userSchema.pre<IUser>('save', function (next) {
+        if (!this.isModified('password')) return next()
+
+        bcrypt.hash(this.password, salt, (err, hash) => {
+            if (err) return next(err)
+
+            this.password = hash
+            next()
+        })
+    })
+    return model<IUser>('User', userSchema)
+}
+
+export default init

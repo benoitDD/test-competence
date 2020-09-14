@@ -1,11 +1,13 @@
 import { FastifyPluginAsync } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
 import userService from './service'
+import userGraphql from './graphql'
 
 declare module 'fastify' {
     interface FastifyInstance {
         users: {
             service: typeof userService
+            graphql: typeof userGraphql
         }
     }
 }
@@ -13,6 +15,7 @@ declare module 'fastify' {
 const plugin: FastifyPluginAsync = async function (app) {
     app.decorate('users', {
         service: userService,
+        graphql: userGraphql,
     })
 }
 

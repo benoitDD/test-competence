@@ -11,8 +11,6 @@ type Mutation {
 }
 type Query {
     searchArticles(text: String!): [Article]!
-    lastArticles: [Article]!
-    yourArticles: [Article]!
     article(articleId: ID!): Article
     commentsByArticle(articleId: ID!): [Comment]!
 }

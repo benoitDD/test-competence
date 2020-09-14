@@ -4,7 +4,7 @@ import userService from './service'
 
 class UserGraphql {
     signUp: Resolver<unknown, SignUpArgs, User> = (_, args, { user }) => {
-        //return userService.signUp(args, user)
+        return userService.signUp(args, user)
     }
 }
 

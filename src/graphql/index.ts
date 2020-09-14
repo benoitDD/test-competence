@@ -10,6 +10,7 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
         Query: {},
         Mutation: {
             createArticle: app.articles.graphql.createArticle,
+            signUp: app.users.graphql.signUp,
         },
         Article: app.articles.typeResolver,
     }
@@ -21,7 +22,7 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
         context: async (request, reply) => {
             // Return an object that will be available in your GraphQL resolvers
             return {
-                user: { id: new Types.ObjectId().toHexString() },
+                //user: { id: new Types.ObjectId().toHexString() },
             }
         },
     })
