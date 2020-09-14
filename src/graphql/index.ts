@@ -7,7 +7,9 @@ import jwt from 'jsonwebtoken'
 
 const graphqlPlugins: FastifyPluginAsync = async function (app) {
     const resolvers = {
-        Query: {},
+        Query: {
+            article: app.articles.graphql.getArticle,
+        },
         Mutation: {
             createArticle: app.articles.graphql.createArticle,
             signUp: app.users.graphql.signUp,

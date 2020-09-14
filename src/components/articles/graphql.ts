@@ -1,6 +1,6 @@
 import { Resolver } from '../graphql'
 import { User } from '../users/interfaces'
-import { CreateArticleArgs, Article, UpdateArticleArgs, RemoveArticleArgs } from './interfaces'
+import { CreateArticleArgs, Article, UpdateArticleArgs, RemoveArticleArgs, GetArticleArgs } from './interfaces'
 import articleService from './service'
 import userService from '../users/service'
 import { Types } from 'mongoose'
@@ -14,6 +14,9 @@ class ArticleGraphql {
     }
     removeArticle: Resolver<void, RemoveArticleArgs, boolean> = (_, args, { user }) => {
         return articleService.removeArticle(args, user)
+    }
+    getArticle: Resolver<void, GetArticleArgs, Article> = (_, args, { user }) => {
+        return articleService.getArticle(args, user)
     }
 }
 

@@ -11,7 +11,7 @@ type Mutation {
 }
 type Query {
     searchArticles(text: String!): [Article]!
-    article(articleId: ID!): Article
+    article(id: ID!): Article
     commentsByArticle(articleId: ID!): [Comment]!
 }
 type User {
