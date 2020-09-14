@@ -1,10 +1,10 @@
 import { model, Schema, Document } from 'mongoose'
 
-export interface ICommentBase {
+interface IComment extends Document {
     text: string
+    author: Schema.Types.ObjectId
+    article: Schema.Types.ObjectId
 }
-
-interface IComment extends ICommentBase, Document {}
 
 const commentSchema = new Schema({
     text: {
@@ -12,6 +12,16 @@ const commentSchema = new Schema({
         required: true,
         minlength: 1,
         maxlength: 100,
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    article: {
+        type: Schema.Types.ObjectId,
+        ref: 'Article',
+        required: true,
     },
 })
 

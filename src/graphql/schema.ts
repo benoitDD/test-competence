@@ -7,7 +7,7 @@ type Mutation {
   createArticle(title: String!, image: String!, text: String!, tags: [String!]!, status: Status!): Article
   updateArticle(id: ID!, title: String, image: String, text: String, tags: [String!], status: Status): Article
   removeArticle(id: ID!): Boolean
-  createComment(userId: ID!, text: String!): Comment
+  createComment(text: String!, articleId: ID!): Comment
 }
 type Query {
     searchArticles(text: String!): [Article]!
@@ -45,5 +45,6 @@ type Comment {
   id: ID!
   author: User!
   text: String!
+  article: Article!
 }
 `

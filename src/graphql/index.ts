@@ -16,8 +16,10 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
             signOut: app.users.graphql.signOut,
             updateArticle: app.articles.graphql.updateArticle,
             removeArticle: app.articles.graphql.removeArticle,
+            createComment: app.comments.graphql.createComment,
         },
         Article: app.articles.typeResolver,
+        Comment: app.comments.typeResolver,
     }
 
     app.register(GQL, {

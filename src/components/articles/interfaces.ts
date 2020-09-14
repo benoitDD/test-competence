@@ -1,4 +1,4 @@
-import { Comment } from '../comments/graphql'
+import { Comment } from '../comments/interfaces'
 import { Status } from '../types'
 import { User } from '../users/interfaces'
 import { Types } from 'mongoose'
@@ -33,4 +33,8 @@ export interface UpdateArticleArgs {
 
 export interface RemoveArticleArgs {
     id: string
+}
+
+export interface GetArticleArgs {
+    id: string | Types.ObjectId
 }

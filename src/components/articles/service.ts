@@ -1,5 +1,5 @@
 import articleModel from './model'
-import { CreateArticleArgs, Article, UpdateArticleArgs, RemoveArticleArgs } from './interfaces'
+import { CreateArticleArgs, Article, UpdateArticleArgs, RemoveArticleArgs, GetArticleArgs } from './interfaces'
 import { User } from '../users/interfaces'
 import mongoose from 'mongoose'
 import { SafeError } from '../../util'
@@ -60,6 +60,17 @@ class ArticleService {
             .then(({ deletedCount }) => {
                 return deletedCount === 1
             })
+    }
+
+    getArticle(args: GetArticleArgs, user?: User): Promise<Article> {
+        return articleModel.findById(args.id).then((article) => {
+            if (!article) throw new SafeError('article not found')
+
+            if (article.status === 'private' && !user)
+                throw new SafeError('this article is private. You must to connect you')
+
+            return article.toObject({ virtuals: true })
+        })
     }
 }
 
