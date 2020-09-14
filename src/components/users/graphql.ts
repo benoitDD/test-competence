@@ -1,5 +1,5 @@
 import { Resolver } from '../graphql'
-import { UserAndToken, SignUpArgs, SignInArgs } from './interfaces'
+import { UserAndToken, SignUpArgs, SignInArgs, UpdateUserArgs, User } from './interfaces'
 import userService from './service'
 
 class UserGraphql {
@@ -8,6 +8,9 @@ class UserGraphql {
     }
     signIn: Resolver<unknown, SignInArgs, UserAndToken> = (_, args, { user }) => {
         return userService.signIn(args, user)
+    }
+    updateUser: Resolver<unknown, UpdateUserArgs, User> = (_, args, { user }) => {
+        return userService.updateUser(args, user)
     }
 }
 

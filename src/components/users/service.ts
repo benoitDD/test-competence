@@ -1,5 +1,5 @@
 import userModelFn, { IUser } from './model'
-import { User, SignUpArgs, SignInArgs, UserAndToken } from './interfaces'
+import { User, SignUpArgs, SignInArgs, UserAndToken, UpdateUserArgs } from './interfaces'
 import { Types, Model } from 'mongoose'
 import { SafeError } from '../../util'
 import jwt from 'jsonwebtoken'
@@ -71,6 +71,23 @@ class UserService {
                 },
             )
         })
+    }
+    async updateUser(args: UpdateUserArgs, user?: User): Promise<User | undefined> {
+        if (!user) throw new SafeError('you must be connected to update a user')
+
+        const userModel = await getUserModel()
+        return userModel
+            .findById(user.id)
+            .then((userMongoose) => {
+                if (!userMongoose) return
+
+                if (args.avatar) userMongoose.avatar = args.avatar
+
+                return userMongoose.save()
+            })
+            .then((userMongoose) => {
+                return userMongoose?.toObject({ virtuals: true })
+            })
     }
 }
 

@@ -24,3 +24,7 @@ export interface SignInArgs {
     login: string
     password: string
 }
+
+export interface UpdateUserArgs {
+    avatar?: string
+}
