@@ -10,6 +10,7 @@ import {
 import { User } from '../users/interfaces'
 import mongoose from 'mongoose'
 import { SafeError } from '../../util'
+import escapeStringRegexp from 'escape-string-regexp'
 
 class ArticleService {
     createArticle(args: CreateArticleArgs, user?: User): Promise<Article> {
@@ -85,15 +86,18 @@ class ArticleService {
 
         const limit = Math.min(Math.max(args.limit, 0), 20)
 
-        return articleModel
-            .find({ text: new RegExp(args.text, 'i') })
-            .limit(limit)
-            .skip(skip)
-            .then((articles) => {
-                if (!user) articles = articles.filter((article) => article.status === 'public')
+        return (
+            articleModel
+                // eslint-disable-next-line security/detect-non-literal-regexp
+                .find({ text: new RegExp(escapeStringRegexp(args.text), 'i') })
+                .limit(limit)
+                .skip(skip)
+                .then((articles) => {
+                    if (!user) articles = articles.filter((article) => article.status === 'public')
 
-                return articles.map((article) => article.toObject({ virtuals: true }))
-            })
+                    return articles.map((article) => article.toObject({ virtuals: true }))
+                })
+        )
     }
 }
 
