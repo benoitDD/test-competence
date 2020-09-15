@@ -7,6 +7,7 @@ import {
     RemoveArticleArgs,
     GetArticleArgs,
     CommentsByArticleArgs,
+    SearchArticleArgs,
 } from './interfaces'
 import articleService from './service'
 import userService from '../users/service'
@@ -26,6 +27,9 @@ class ArticleGraphql {
     }
     getArticle: Resolver<void, GetArticleArgs, Article> = (_, args, { user }) => {
         return articleService.getArticle(args, user)
+    }
+    searchArticles: Resolver<void, SearchArticleArgs, Article[]> = (_, args, { user }) => {
+        return articleService.searchArticles(args, user)
     }
 }
 

@@ -43,3 +43,9 @@ export interface CommentsByArticleArgs {
     skip?: number
     limit: number
 }
+
+export interface SearchArticleArgs {
+    text: string
+    limit: number
+    skip?: number
+}

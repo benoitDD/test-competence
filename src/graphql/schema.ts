@@ -10,7 +10,7 @@ type Mutation {
   createComment(text: String!, articleId: ID!): Comment
 }
 type Query {
-    searchArticles(text: String!): [Article]!
+    searchArticles(text: String!, limit: Int!, skip: Int): [Article]!
     article(id: ID!): Article
     commentsByArticle(articleId: ID!): [Comment]!
 }

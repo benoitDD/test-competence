@@ -1,5 +1,12 @@
 import articleModel from './model'
-import { CreateArticleArgs, Article, UpdateArticleArgs, RemoveArticleArgs, GetArticleArgs } from './interfaces'
+import {
+    CreateArticleArgs,
+    Article,
+    UpdateArticleArgs,
+    RemoveArticleArgs,
+    GetArticleArgs,
+    SearchArticleArgs,
+} from './interfaces'
 import { User } from '../users/interfaces'
 import mongoose from 'mongoose'
 import { SafeError } from '../../util'
@@ -71,6 +78,22 @@ class ArticleService {
 
             return article.toObject({ virtuals: true })
         })
+    }
+
+    searchArticles(args: SearchArticleArgs, user?: User): Promise<Article[]> {
+        const skip = Math.max(args.skip || 0, 0)
+
+        const limit = Math.min(Math.max(args.limit, 0), 20)
+
+        return articleModel
+            .find({ text: new RegExp(args.text, 'i') })
+            .limit(limit)
+            .skip(skip)
+            .then((articles) => {
+                if (!user) articles = articles.filter((article) => article.status === 'public')
+
+                return articles.map((article) => article.toObject({ virtuals: true }))
+            })
     }
 }
 
