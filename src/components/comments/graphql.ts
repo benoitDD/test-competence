@@ -1,6 +1,6 @@
 import { Resolver } from '../graphql'
 import commentService from './service'
-import { Comment, CreateCommentArgs } from './interfaces'
+import { Comment, CreateCommentArgs, SearchByArticleArgs } from './interfaces'
 import { User } from '../users/interfaces'
 import { Article } from '../articles/interfaces'
 import { Types } from 'mongoose'
@@ -10,6 +10,9 @@ import articleService from '../articles/service'
 class CommentGraphql {
     createComment: Resolver<unknown, CreateCommentArgs, Comment> = (_, args, { user }) => {
         return commentService.createComment(args, user)
+    }
+    commentsByArticle: Resolver<unknown, SearchByArticleArgs, Comment[]> = (_, args, { user }) => {
+        return commentService.searchByArticle(args, user)
     }
 }
 

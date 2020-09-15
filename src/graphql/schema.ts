@@ -12,7 +12,7 @@ type Mutation {
 type Query {
     searchArticles(text: String!, limit: Int!, skip: Int): [Article]!
     article(id: ID!): Article
-    commentsByArticle(articleId: ID!): [Comment]!
+    commentsByArticle(articleId: ID!, limit: Int!, skip: Int): [Comment]!
 }
 type User {
   id: ID!

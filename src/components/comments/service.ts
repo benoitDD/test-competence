@@ -28,7 +28,7 @@ class CommentService {
         const limit = Math.min(Math.max(args.limit, 0), 20)
 
         //may throw a error, if article not found or private
-        articleService.getArticle({ id: args.articleId }, user)
+        await articleService.getArticle({ id: args.articleId }, user)
 
         return commentModel
             .find({ article: (new Types.ObjectId(args.articleId) as unknown) as Schema.Types.ObjectId })

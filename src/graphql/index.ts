@@ -10,6 +10,7 @@ const graphqlPlugins: FastifyPluginAsync = async function (app) {
         Query: {
             article: app.articles.graphql.getArticle,
             searchArticles: app.articles.graphql.searchArticles,
+            commentsByArticle: app.comments.graphql.commentsByArticle,
         },
         Mutation: {
             createArticle: app.articles.graphql.createArticle,
