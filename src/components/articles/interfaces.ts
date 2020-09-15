@@ -38,3 +38,8 @@ export interface RemoveArticleArgs {
 export interface GetArticleArgs {
     id: string | Types.ObjectId
 }
+
+export interface CommentsByArticleArgs {
+    skip?: number
+    limit: number
+}

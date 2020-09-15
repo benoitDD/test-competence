@@ -35,7 +35,7 @@ type Article {
   tags: [String!]!
   status: Status!
   author: User
-  comments: [Comment]
+  comments(limit: Int!, skip: Int): [Comment]
 }
 enum Status {
   private

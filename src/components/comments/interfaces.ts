@@ -13,3 +13,9 @@ export interface CreateCommentArgs {
     text: string
     articleId: string
 }
+
+export interface SearchByArticleArgs {
+    articleId: string
+    limit: number
+    skip?: number
+}

@@ -1,9 +1,18 @@
 import { Resolver } from '../graphql'
 import { User } from '../users/interfaces'
-import { CreateArticleArgs, Article, UpdateArticleArgs, RemoveArticleArgs, GetArticleArgs } from './interfaces'
+import {
+    CreateArticleArgs,
+    Article,
+    UpdateArticleArgs,
+    RemoveArticleArgs,
+    GetArticleArgs,
+    CommentsByArticleArgs,
+} from './interfaces'
 import articleService from './service'
 import userService from '../users/service'
+import commentService from '../comments/service'
 import { Types } from 'mongoose'
+import { Comment } from '../comments/interfaces'
 
 class ArticleGraphql {
     createArticle: Resolver<void, CreateArticleArgs, Article> = (_, args, { user }) => {
@@ -30,6 +39,11 @@ const authorResolver: Resolver<Article, void, User> = (article) => {
     else return article.author as User
 }
 
+const commentsResolver: Resolver<Article, CommentsByArticleArgs, Comment[]> = (article, args, { user }) => {
+    return commentService.searchByArticle({ articleId: article.id, limit: args.limit, skip: args.skip }, user)
+}
+
 export const typeResolver = {
     author: authorResolver,
+    comments: commentsResolver,
 }
