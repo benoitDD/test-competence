@@ -1,51 +1,84 @@
 import buildApp from './app'
+import { MongoMemoryServer } from 'mongodb-memory-server'
+import os from 'os'
+import config from './config'
 
-const app = buildApp()
+const platorm = os.platform()
 
-describe('test healtcheck route', () => {
-    test('without params, should be OK', async () => {
-        const response = await app.inject({
-            method: 'GET',
-            url: '/healthcheck',
-        })
+let version //only this verion work on window.
+if (platorm === 'win32') version = '3.5.5'
 
-        expect(response.body).toBe('OK')
-    })
+const mongod = new MongoMemoryServer({
+    instance: {},
+    binary: {
+        version,
+    },
 })
-describe('api graphql', () => {
-    describe('authentication', () => {
-        test('sign up with good params, should be OK', async () => {
-            const randomLogin = Math.random().toString(36).substring(7)
-            const randomEmail = `${randomLogin}@gmail.com`
+
+beforeAll(async (done) => {
+    try {
+        const uri = await mongod.getUri()
+        config.set('database.uri', uri)
+        done()
+    } catch (err) {
+        done(err)
+    }
+})
+
+describe('tests', () => {
+    const app = buildApp()
+    describe('test healtcheck route', () => {
+        test('without params, should be OK', async () => {
             const response = await app.inject({
-                method: 'POST',
-                url: '/graphql',
-                payload: {
-                    query: `mutation {signUp(login: "${randomLogin}", password: "deeesss", email: "${randomEmail}", avatar: "myavatar.png") {id login email avatar token}}`,
-                },
+                method: 'GET',
+                url: '/healthcheck',
             })
 
-            const body = JSON.parse(response.body)
-            expect(body).toMatchObject({
-                data: {
-                    signUp: {
-                        login: randomLogin,
-                        email: randomEmail,
-                        avatar: 'myavatar.png',
+            expect(response.body).toBe('OK')
+        })
+    })
+    describe('api graphql', () => {
+        describe('authentication', () => {
+            test('sign up with good params, should be OK', async () => {
+                const randomLogin = Math.random().toString(36).substring(7)
+                const randomEmail = `${randomLogin}@gmail.com`
+                const response = await app.inject({
+                    method: 'POST',
+                    url: '/graphql',
+                    payload: {
+                        query: `mutation {signUp(login: "${randomLogin}", password: "deeesss", email: "${randomEmail}", avatar: "myavatar.png") {id login email avatar token}}`,
                     },
-                },
+                })
+
+                const body = JSON.parse(response.body)
+                expect(body).toMatchObject({
+                    data: {
+                        signUp: {
+                            login: randomLogin,
+                            email: randomEmail,
+                            avatar: 'myavatar.png',
+                        },
+                    },
+                })
+
+                expect(typeof body.data.signUp.id).toBe('string')
+                expect(typeof body.data.signUp.token).toBe('string')
             })
 
-            expect(typeof body.data.signUp.id).toBe('string')
-            expect(typeof body.data.signUp.token).toBe('string')
+            //to continued ... (bad sign up)
         })
 
-        //to continued ... (bad sign up)
+        //to continued ...
     })
 
-    //to continued ...
+    afterAll(async (done) => {
+        await app.close()
+
+        done()
+    })
 })
 
-afterAll(() => {
-    app.close()
+afterAll(async (done) => {
+    await mongod.stop()
+    done()
 })
