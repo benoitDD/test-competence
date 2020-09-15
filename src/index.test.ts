@@ -5,11 +5,10 @@ import config from './config'
 
 const platorm = os.platform()
 
-let version //only this verion work on window.
+let version //this version work on my window :-)
 if (platorm === 'win32') version = '3.5.5'
 
 const mongod = new MongoMemoryServer({
-    instance: {},
     binary: {
         version,
     },
@@ -40,13 +39,18 @@ describe('tests', () => {
     describe('api graphql', () => {
         describe('authentication', () => {
             test('sign up with good params, should be OK', async () => {
-                const randomLogin = Math.random().toString(36).substring(7)
-                const randomEmail = `${randomLogin}@gmail.com`
+                const login = 'benoit'
+                const email = `${login}@gmail.com`
+                const avatar = 'myavatar.png'
                 const response = await app.inject({
                     method: 'POST',
                     url: '/graphql',
                     payload: {
-                        query: `mutation {signUp(login: "${randomLogin}", password: "deeesss", email: "${randomEmail}", avatar: "myavatar.png") {id login email avatar token}}`,
+                        query: `
+                        mutation {
+                            signUp(login: "${login}", password: "deeesss", email: "${email}", avatar: "${avatar}") 
+                                {id login email avatar token}
+                        }`,
                     },
                 })
 
@@ -54,9 +58,9 @@ describe('tests', () => {
                 expect(body).toMatchObject({
                     data: {
                         signUp: {
-                            login: randomLogin,
-                            email: randomEmail,
-                            avatar: 'myavatar.png',
+                            login,
+                            email,
+                            avatar,
                         },
                     },
                 })
@@ -65,7 +69,7 @@ describe('tests', () => {
                 expect(typeof body.data.signUp.token).toBe('string')
             })
 
-            //to continued ... (bad sign up)
+            //to continued ... (bad sign up, ...)
         })
 
         //to continued ...
