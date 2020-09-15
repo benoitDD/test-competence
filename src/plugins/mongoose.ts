@@ -9,9 +9,11 @@ declare module 'fastify' {
 }
 
 const mongoosePlugins: FastifyPluginAsync = async function (app) {
+    const createDataBase = ['development', 'test'].includes(app.config.get('env'))
     mongoose.connect(app.config.get('database').uri, {
         useNewUrlParser: true,
-        autoIndex: ['development', 'test'].includes(app.config.get('env')),
+        autoIndex: createDataBase,
+        autoCreate: createDataBase,
         useUnifiedTopology: true,
     })
 
