@@ -11,7 +11,7 @@
     "dev": "tsc && node -r dotenv/config ./build dotenv_config_path=env/.env-dev",
     "compile-schemas": "json2ts -i src/schemas -o src/types",
     "lint": "eslint src --fix",
-    "pm2-local": "pm2 start ecosystem.config.js",
+    "pm2-local": "tsc && pm2 start ecosystem.config.js",
     "pm2-stop": "pm2 delete myApp"
   },
   "keywords": [],
