@@ -1,4 +1,3 @@
-import { tokenToString } from 'typescript'
 import { Role } from '../types'
 
 export interface User {
