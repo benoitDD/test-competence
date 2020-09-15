@@ -11,7 +11,7 @@ declare module 'fastify' {
 const mongoosePlugins: FastifyPluginAsync = async function (app) {
     mongoose.connect(app.config.get('database').uri, {
         useNewUrlParser: true,
-        autoIndex: app.config.get('env') === 'development',
+        autoIndex: ['development', 'test'].includes(app.config.get('env')),
         useUnifiedTopology: true,
     })
 

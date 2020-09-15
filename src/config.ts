@@ -26,7 +26,7 @@ const schema = {
         uri: {
             doc: 'The database uri.',
             format: String,
-            default: 'mongodb://192.168.99.100/myApp',
+            default: 'mongodb://192.168.99.100/test',
             env: 'DATABASE_URI',
         },
     },

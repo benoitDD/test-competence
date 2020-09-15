@@ -11,6 +11,7 @@ module.exports = {
             },
             env_local: {
                 NODE_ENV: 'development',
+                DATABASE_URI: 'mongodb://192.168.99.100/myApp',
             },
         },
     ],
