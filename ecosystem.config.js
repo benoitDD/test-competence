@@ -6,6 +6,9 @@ module.exports = {
             instances: 'max',
             exec_mode: 'cluster',
             restart_delay: 3000,
+            max_memory_restart: '150M',
+            restart_delay: 800,
+            max_restarts: 10,
             env: {
                 PORT: 8080,
             },
